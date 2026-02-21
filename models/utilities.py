@@ -1,15 +1,13 @@
 import pandas as pd
 
 
-def get_text_series(frame: pd.DataFrame) -> pd.Series:
-    """Gets title + description as a data point (Missing vals are replaces w/ empty strings)
+def get_text_series(frame: pd.DataFrame, use_feature: str = "both") -> pd.Series:
+    title = frame["title"].fillna("")
+    desc = frame["description"].fillna("")
 
-    Args:
-        frame (pd.DataFrame): dataframe with column title and description
+    if use_feature == "title":
+        return title.astype(str).str.strip()
+    if use_feature == "description":
+        return desc.astype(str).str.strip()
 
-    Returns:
-        pd.Series: the concatenated, cleaned data consisting of title and description
-    """
-    return (
-        frame["title"].fillna("") + " " + frame["description"].fillna("")  # type: ignore
-    ).str.strip()
+    return (title.astype(str) + " " + desc.astype(str)).str.strip()

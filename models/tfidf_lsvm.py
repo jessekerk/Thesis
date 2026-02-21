@@ -5,11 +5,11 @@ from sklearn.svm import LinearSVC
 from models.utilities import get_text_series
 
 
-def run_tfidf_lsvm(train_df, eval_df):
-    train_texts = get_text_series(train_df)
+def run_tfidf_lsvm(train_df, eval_df, use_feature: str = "both"):
+    train_texts = get_text_series(train_df, use_feature=use_feature)
     y_train = train_df["label"]
 
-    eval_texts = get_text_series(eval_df)
+    eval_texts = get_text_series(eval_df, use_feature=use_feature)
     y_eval = eval_df["label"]
 
     vectorizer = TfidfVectorizer(
